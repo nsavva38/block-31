@@ -20,12 +20,13 @@ app.get("/employees/random", (req, res) => {
 
 app.get("/employees/:id", (req, res) => {
   const { id } = req.params;
-  if (id < 0 || id >= employees.length) {
-    res.status(404).send("This person is not an employee");
+  const employee = employees.find((e) => e.id === +id);
+  if (employee) {
+    res.json(employee);
   } else {
-    res.json(employees[id]);
+    res.status(404).send(`There is no employee with id ${id}.`);
   }
-})
+});
 
 
 
